@@ -12,11 +12,20 @@ Cancer of unknown primary origin(CUP), a metastatic disease with no definite pri
 |------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [CancerLocator](https://github.com/jasminezhoulab/CancerLocator) | [CancerLocator: non-invasive cancer diagnosis and tissue-of-origin prediction using methylation profiles of cell-free DNA](https://doi.org/10.1186/s13059-017-1191-5) |
 |[MONOD2](https://github.com/dinhdiep/MONOD2) | [Identification of methylation haplotype blocks aids in deconvolution of heterogeneous tissue samples and tumor tissue-of-origin mapping from plasma DNA](http://dx.doi.org/10.1038/ng.3805)
-|[TumorTracer](http://www.cbs.dtu.dk/services/TumorTracer) | [TumorTracer: a method to identify the tissue of origin from the somatic mutations of a tumor specimen](https://doi.org/10.1186/s12920-015-0130-0)
+|[TumorTracer](http://www.cbs.dtu.dk/services/TumorTracer)[*] | [TumorTracer: a method to identify the tissue of origin from the somatic mutations of a tumor specimen](https://doi.org/10.1186/s12920-015-0130-0)
 |[Methylation Atlas Deconvolution](https://github.com/nloyfer/meth_atlas) | [Comprehensive human cell-type methylation atlas reveals origins of circulating cell-free DNA in health and disease](https://doi.org/10.1038/s41467-018-07466-6)
 |[DeepGene](https://github.com/yuanyc06/deepgene) | [DeepGene: an advanced cancer type classifier based on deep learning and somatic point mutations](https://doi.org/10.1186/s12859-016-1334-9)
+| [MMCOP](http://server.malab.cn/MMCOP/)[*] | [Tumor origin detection with tissue-specific miRNA and DNA methylation markers](https://doi.org/10.1093/bioinformatics/btx622)
+
+[*]: These tools were implemented as web server.
 
 ### Method already provided but implemented by us
+
+#### [Decision-tree classification algorithm using miRNA expression levels](http://www.nature.com/doifinder/10.1038/nbt1392)
+
+
+
+
 
 
 
