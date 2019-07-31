@@ -1,5 +1,7 @@
 # TPS
 
+> The tools implemented/integrated in this project will use pretty complex environment. To satisfy it, I'll deploy a docker image in the future.
+
 ## Introduction
 
 Cancer of unknown primary origin(CUP), a metastatic disease with no definite primary site, accounts for nearly 3-5% of new cancer cases[1]. Lots of outstanding researchers have made a big effort in developing tools or methods to solve current limitation in cancer origin identification. Here, we represented TPS: Tumor Positioning Server, an interactive, web-based platform synthesized all published cancer origin prediction methods, to provide a convenient and comprehensive tool for CUP diagnosis community.
@@ -21,17 +23,69 @@ Cancer of unknown primary origin(CUP), a metastatic disease with no definite pri
 
 ### Method already provided but implemented by us
 
-#### [Decision-tree classification algorithm using miRNA expression levels](http://www.nature.com/doifinder/10.1038/nbt1392)
+#### [Decision-tree classification algorithm using miRNA expression levels](./miRNATreeClassifier), [Ref](http://www.nature.com/doifinder/10.1038/nbt1392)
 
+##### Example data
 
+Data used in this method comes from the [Supplementary Table 2](https://media.nature.com/original/nature-assets/nbt/journal/v26/n4/extref/nbt1392-S2.xls) (Well, the paper says it is #2 while the online version displays it as #1, _**** *** **** !@#$%^&*!_ whatever, I know that you know what I say) of the reference paper. First download it and delete the useless columns. Then, we need add a column `is_liver_metastasis` to indicate whether the patient is a liver metastasis case or not:
 
+```pre
+=IF(AND(B2="Liver",C2=1),1,0)
+```
 
+Here, column `B` is original `tumor_site` column and `C` is `is_metastatic` column in the table. So if a value in `is_liver_metastasis` column is `1`, the patient should be a liver metastasis case, on the other hand, he/she is not allowed to be classified as originating from liver tissue and were classified to the right branch in node `no. 1` (**see below**).
 
+The column names of the table has no prefix `hsa-`. Saving the table as *csv UTF-8* format with name [`test_data.csv`](./miRNATreeClassifier/test_data.csv), we then used a perl one-liner to modify the column names to make the table be consistent with other descriptions through the story:
 
+```bash
+perl -i -F',' -lanE'if($.==1){for(@F){$_=qq{hsa-}.$_ if /-/}say @{[join q{,},@F]}}else{say}' test_data.csv
+```
+
+However, the miRNA names in this table don't completely match with **Table 2** in paper, the difference is listed below:
+
+|Table 2 |SI Table|
+|-|-
+|hsa-miR-145 |	NA
+|hsa-miR-92a|	NA
+|hsa-miR-21|	NA
+|NA	|miR-649
+|NA	|miR-661
+|NA	|miR-92
+
+To make them consistent, the miRNA names in `test_data.csv` were finally changed:
+
+|SI Table|`test_data.csv`|
+|-|-
+|miR-649|hsa-miR-21
+|miR-661|hsa-miR-145
+|miR-92|hsa-miR-92a
+
+> We have contact authors for details about this problem.
+
+Similarly, we saved the [Supplementary Table 3](https://media.nature.com/original/nature-assets/nbt/journal/v26/n4/extref/nbt1392-S3.xls) (emmm, #2 in online version) whose first few lines (those useless lines) were removed as *csv UTF-8* format with name [`model.csv`](./miRNATreeClassifier/model.csv). This table is used as the model for predicting.
+
+The stars (*) labeling hsa-miR-9 in both tables were also be removed.
+
+It is convenient for us to test our script use the modified data.
+
+##### How to make prediction?
+
+The method was implemented as Python 3 script [miRNATreeClassifier.py](./miRNATreeClassifier/miRNATreeClassifier.py).
+
+To run the script, first satisfy the environment using `conda env`, then just pass file names to it:
+
+```bash
+conda create -n miRNATreeClassifier pandas
+conda activate miRNATreeClassifier
+./miRNATreeClassifier.py model.csv test_data.csv
+```
+
+> Note: `model.csv` is used as a well trained model, should not be changed. 
 
 ### For more:
 
-A post but never published: [The Mystery of the Origin — Cancer Type Classification using Fast.AI Library](https://towardsdatascience.com/the-mystery-of-the-origin-cancer-type-classification-using-fast-ai-libray-212eaf8d3f4e)
+- A post but never published: [The Mystery of the Origin — Cancer Type Classification using Fast.AI Library](https://towardsdatascience.com/the-mystery-of-the-origin-cancer-type-classification-using-fast-ai-libray-212eaf8d3f4e)
+- More about TOO: [https://www.cancergenetics.com/laboratory-services/specialty-tests/too-tissue-of-origin-test/]
 
 ## Reference
 
