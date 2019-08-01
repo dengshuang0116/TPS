@@ -27,7 +27,7 @@ Cancer of unknown primary origin(CUP), a metastatic disease with no definite pri
 
 ##### Example data
 
-Data used in this method comes from the [Supplementary Table 2](https://media.nature.com/original/nature-assets/nbt/journal/v26/n4/extref/nbt1392-S2.xls) (Well, the paper says it is #2 while the online version displays it as #1, _**** *** **** !@#$%^&*!_ whatever, I know that you know what I say) of the reference paper. First download it and delete the useless columns. Then, we need add a column `is_liver_metastasis` to indicate whether the patient is a liver metastasis case or not:
+Data used in this method comes from the [Supplementary Table 2](https://media.nature.com/original/nature-assets/nbt/journal/v26/n4/extref/nbt1392-S2.xls) of the reference paper. First download it and delete the useless columns. Then, we need add a column `is_liver_metastasis` to indicate whether the patient is a liver metastasis case or not:
 
 ```pre
 =IF(AND(B2="Liver",C2=1),1,0)
@@ -67,6 +67,10 @@ Similarly, we saved the [Supplementary Table 3](https://media.nature.com/origina
 The stars (*) labeling hsa-miR-9 in both tables were also be removed.
 
 It is convenient for us to test our script use the modified data.
+
+##### Inputdata preparation
+
+To predict tumor tissue of origin with miRNA, users should prepare their input data similar to our test data, i.e. a data table with "gender" ofthe patients as the first colomn to make sure a higher prediction efficiency of the model, followed by "tumor site" as the second, and then whether the tumor has liver metastasis, that is "is_liver_metastasis" in the third column, "1" represents the patient had a liver metastasis, while "0" the opposite. Other columns of the table contain the detected expression of these 48 miRNAs from this patient. Except for the "tumor site",other items mentioned above are all indispensable for the prediction.
 
 ##### How to make prediction?
 
